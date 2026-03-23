@@ -32,6 +32,9 @@ type WeatherBlock struct {
 	// CloudCover      float64
 	PrecipitationChance ProbPrecip `json:"probabilityOfPrecipitation"`
 	Details             string     `json:"detailedForecast"`
+	WindSpeed           string     `json:"windSpeed"`
+	WindDir             string     `json:"windDirection"`
+	ShortDescription    string     `json:"shortForecast"`
 }
 
 type WeatherProps struct {

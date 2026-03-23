@@ -131,6 +131,8 @@ func (m State) View() tea.View {
 		s += fmt.Sprintf("Times: %s - %s\n", currPeriod.StartTime, currPeriod.EndTime)
 		s += fmt.Sprintf("Current Temp: %d%s\n", currPeriod.Temperature, currPeriod.TemperatureUnit)
 		s += fmt.Sprintf("Risk of Rain: %d%%\n", currPeriod.PrecipitationChance.Value)
+		s += fmt.Sprintf("Wind Condition: %s %s\n", currPeriod.WindSpeed, currPeriod.WindDir)
+		s += fmt.Sprintf("Short Description: %s\n", currPeriod.ShortDescription)
 		s += fmt.Sprintf("Details: %s\n", currPeriod.Details)
 	}
 
