@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"strings"
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/smoss/weather-tui/api"
@@ -133,7 +134,21 @@ func (m State) View() tea.View {
 		s += fmt.Sprintf("Risk of Rain: %d%%\n", currPeriod.PrecipitationChance.Value)
 		s += fmt.Sprintf("Wind Condition: %s %s\n", currPeriod.WindSpeed, currPeriod.WindDir)
 		s += fmt.Sprintf("Short Description: %s\n", currPeriod.ShortDescription)
-		s += fmt.Sprintf("Details: %s\n", currPeriod.Details)
+		words := strings.Split(currPeriod.Details, " ")
+		// details := make([]string, 0)
+		currLine := ""
+		s += "Details:\n"
+		for _, word := range words {
+			currLine += word
+			if len([]rune(currLine)) > 80 {
+				s += currLine + "\n"
+				currLine = ""
+			} else {
+				currLine += " "
+			}
+		}
+		s += currLine + "\n"
+
 	}
 
 	s += "\nPress q to quit.\n"
