@@ -1,4 +1,4 @@
-package models
+package tui
 
 import (
 	"fmt"
@@ -126,8 +126,9 @@ func (m State) View() tea.View {
 			}
 		}
 		s += periods + "\n"
-
+		s += getSymbol(currPeriod)
 		altitudeUnit := string([]rune(m.CurrentWeather.ElevationBlock.ElevationUnit)[len(m.CurrentWeather.ElevationBlock.ElevationUnit)-1])
+		s += fmt.Sprintf("Name: %s\n", currPeriod.Name)
 		s += fmt.Sprintf("Current Altitude: %f %s\n", m.CurrentWeather.ElevationBlock.Value, altitudeUnit)
 		s += fmt.Sprintf("Times: %s - %s\n", currPeriod.StartTime, currPeriod.EndTime)
 		s += fmt.Sprintf("Current Temp: %d%s\n", currPeriod.Temperature, currPeriod.TemperatureUnit)
@@ -137,17 +138,22 @@ func (m State) View() tea.View {
 		words := strings.Split(currPeriod.Details, " ")
 		// details := make([]string, 0)
 		currLine := ""
+		lines := 0
 		s += "Details:\n"
 		for _, word := range words {
 			currLine += word
 			if len([]rune(currLine)) > 80 {
 				s += currLine + "\n"
 				currLine = ""
+				lines += 1
 			} else {
 				currLine += " "
 			}
 		}
 		s += currLine + "\n"
+		for i := lines; i < 5; i++ {
+			s += "\n"
+		}
 
 	}
 

@@ -5,7 +5,7 @@ import (
 	"os"
 
 	tea "charm.land/bubbletea/v2"
-	models "github.com/smoss/weather-tui/tui"
+	"github.com/smoss/weather-tui/tui"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 	// fmt.Println(weatherResult)
 	// fmt.Println(err)
 
-	p := tea.NewProgram(models.InitialState())
+	p := tea.NewProgram(tui.InitialState())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
