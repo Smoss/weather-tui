@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type TemperatureScale string
 
 const (
@@ -40,8 +42,8 @@ type WeatherBlock struct {
 	Name                string           `json:"name"`
 	Temperature         int              `json:"temperature"`
 	TemperatureUnit     TemperatureScale `json:"temperatureUnit"`
-	StartTime           string           `json:"startTime"`
-	EndTime             string           `json:"endTime"`
+	StartTime           time.Time        `json:"startTime"`
+	EndTime             time.Time        `json:"endTime"`
 	PrecipitationChance SubBlock         `json:"probabilityOfPrecipitation"`
 	Details             string           `json:"detailedForecast"`
 	WindSpeed           string           `json:"windSpeed"`

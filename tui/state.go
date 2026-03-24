@@ -80,7 +80,23 @@ func (m State) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.CurrentWeather != nil && m.cursor < 0 {
 				m.cursor = len(m.CurrentWeather.Periods) - 1
 			}
+		case "up":
+			if m.cursor < 0 {
+				break
+			}
+			m.cursor += 24
+			if m.CurrentWeather != nil && m.cursor >= len(m.CurrentWeather.Periods) {
+				m.cursor = m.cursor % len(m.CurrentWeather.Periods)
+			}
 
+		case "down":
+			if m.cursor < 0 {
+				break
+			}
+			m.cursor -= 24
+			if m.CurrentWeather != nil && m.cursor < 0 {
+				m.cursor = len(m.CurrentWeather.Periods) + m.cursor
+			}
 		// The "enter" key refreshes the weather
 		case "enter":
 			m.getWeather()
@@ -132,8 +148,8 @@ func (m State) View() tea.View {
 		s += getSymbol(currPeriod)
 		altitudeUnit := string([]rune(m.CurrentWeather.ElevationBlock.ElevationUnit)[len(m.CurrentWeather.ElevationBlock.ElevationUnit)-1])
 		s += fmt.Sprintf("Name: %s\n", currPeriod.Name)
-		s += fmt.Sprintf("Current Altitude: %f %s\n", m.CurrentWeather.ElevationBlock.Value, altitudeUnit)
-		s += fmt.Sprintf("Times: %s - %s\n", currPeriod.StartTime, currPeriod.EndTime)
+		s += fmt.Sprintf("Current Altitude: %.0f %s\n", m.CurrentWeather.ElevationBlock.Value, altitudeUnit)
+		s += fmt.Sprintf("Times: %s\n", currPeriod.StartTime.Format("Monday, January 2, 03:04PM"))
 		s += fmt.Sprintf("Current Temp: %d%s\n", currPeriod.Temperature, currPeriod.TemperatureUnit)
 		s += fmt.Sprintf("RH: %d%%\n", currPeriod.RelativeHumidity.Value)
 		s += fmt.Sprintf("Risk of Rain: %d%%\n", currPeriod.PrecipitationChance.Value)
