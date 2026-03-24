@@ -2,7 +2,6 @@ package tui
 
 import (
 	"fmt"
-	"strings"
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/smoss/weather-tui/api"
@@ -124,6 +123,10 @@ func (m State) View() tea.View {
 			} else {
 				periods += "[ ] "
 			}
+			if len([]rune(periods)) >= 130 {
+				s += periods + "\n"
+				periods = ""
+			}
 		}
 		s += periods + "\n"
 		s += getSymbol(currPeriod)
@@ -132,28 +135,29 @@ func (m State) View() tea.View {
 		s += fmt.Sprintf("Current Altitude: %f %s\n", m.CurrentWeather.ElevationBlock.Value, altitudeUnit)
 		s += fmt.Sprintf("Times: %s - %s\n", currPeriod.StartTime, currPeriod.EndTime)
 		s += fmt.Sprintf("Current Temp: %d%s\n", currPeriod.Temperature, currPeriod.TemperatureUnit)
+		s += fmt.Sprintf("RH: %d%%\n", currPeriod.RelativeHumidity.Value)
 		s += fmt.Sprintf("Risk of Rain: %d%%\n", currPeriod.PrecipitationChance.Value)
 		s += fmt.Sprintf("Wind Condition: %s %s\n", currPeriod.WindSpeed, currPeriod.WindDir)
 		s += fmt.Sprintf("Short Description: %s\n", currPeriod.ShortDescription)
-		words := strings.Split(currPeriod.Details, " ")
+		// words := strings.Split(currPeriod.Details, " ")
 		// details := make([]string, 0)
 		currLine := ""
-		lines := 0
-		s += "Details:\n"
-		for _, word := range words {
-			currLine += word
-			if len([]rune(currLine)) > 80 {
-				s += currLine + "\n"
-				currLine = ""
-				lines += 1
-			} else {
-				currLine += " "
-			}
-		}
+		// lines := 0
+		// s += "Details:\n"
+		// for _, word := range words {
+		// 	currLine += word
+		// 	if len([]rune(currLine)) > 80 {
+		// 		s += currLine + "\n"
+		// 		currLine = ""
+		// 		lines += 1
+		// 	} else {
+		// 		currLine += " "
+		// 	}
+		// }
 		s += currLine + "\n"
-		for i := lines; i < 5; i++ {
-			s += "\n"
-		}
+		// for i := lines; i < 5; i++ {
+		// 	s += "\n"
+		// }
 
 	}
 

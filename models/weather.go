@@ -14,7 +14,7 @@ const (
 	Feet   ElevationUnit = "wmoUnit:f"
 )
 
-type ProbPrecip struct {
+type SubBlock struct {
 	Value int64 `json:"value"`
 }
 
@@ -23,18 +23,32 @@ type ElevationBlock struct {
 	ElevationUnit ElevationUnit `json:"unitCode"`
 }
 
+type LargeWeatherBlock struct {
+	Name                string           `json:"name"`
+	Temperature         int              `json:"temperature"`
+	TemperatureUnit     TemperatureScale `json:"temperatureUnit"`
+	StartTime           string           `json:"startTime"`
+	EndTime             string           `json:"endTime"`
+	PrecipitationChance SubBlock         `json:"probabilityOfPrecipitation"`
+	Details             string           `json:"detailedForecast"`
+	WindSpeed           string           `json:"windSpeed"`
+	WindDir             string           `json:"windDirection"`
+	ShortDescription    string           `json:"shortForecast"`
+}
+
 type WeatherBlock struct {
-	Name            string           `json:"name"`
-	Temperature     int              `json:"temperature"`
-	TemperatureUnit TemperatureScale `json:"temperatureUnit"`
-	StartTime       string           `json:"startTime"`
-	EndTime         string           `json:"endTime"`
-	// CloudCover      float64
-	PrecipitationChance ProbPrecip `json:"probabilityOfPrecipitation"`
-	Details             string     `json:"detailedForecast"`
-	WindSpeed           string     `json:"windSpeed"`
-	WindDir             string     `json:"windDirection"`
-	ShortDescription    string     `json:"shortForecast"`
+	Name                string           `json:"name"`
+	Temperature         int              `json:"temperature"`
+	TemperatureUnit     TemperatureScale `json:"temperatureUnit"`
+	StartTime           string           `json:"startTime"`
+	EndTime             string           `json:"endTime"`
+	PrecipitationChance SubBlock         `json:"probabilityOfPrecipitation"`
+	Details             string           `json:"detailedForecast"`
+	WindSpeed           string           `json:"windSpeed"`
+	WindDir             string           `json:"windDirection"`
+	ShortDescription    string           `json:"shortForecast"`
+	IsDaytime           bool             `json:"isDaytime"`
+	RelativeHumidity    SubBlock         `json:"relativeHumidity"`
 }
 
 type WeatherProps struct {

@@ -30,7 +30,7 @@ func GetWeather(zipcode models.ZipcodeCoord) (*models.WeatherProps, error) {
 		return nil, err
 	}
 	client := &http.Client{}
-	weatherUrl := fmt.Sprintf("https://api.weather.gov/gridpoints/%s/%d,%d/forecast", grid.GridId, grid.GridX, grid.GridY)
+	weatherUrl := fmt.Sprintf("https://api.weather.gov/gridpoints/%s/%d,%d/forecast/hourly", grid.GridId, grid.GridX, grid.GridY)
 	req, err := http.NewRequest("GET", weatherUrl, nil)
 	if err != nil {
 		return nil, err
